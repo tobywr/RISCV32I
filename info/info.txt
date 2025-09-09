@@ -1,0 +1,16 @@
+List of Operations / OpCodes utilized in my single core RISC-V Processor : 
+
+Instruction  Type    Opcode     funct3 funct7     Description
+ADDI         I-Type  7'b0010011 3'b000 n/a        Add immediate
+ADD          R-Type  7'b0110011 3'b000 7'b0000000 Add two registers
+SUB          R-Type  7'b0110011 3'b000 7'b0100000 Subtract two register
+AND          R-Type  7'b0110011 3'b111 7'b0000000 Bitwise AND of two register
+LW           I-Type  7'b0000011 3'b010 n/a        Load word from memory
+SW           S-Type  7'b0100011 3'b010 n/a        Store Word to memory
+BEQ          B-Type  7'b1100011 3'b000 n/a        Branch if Equal
+JAL          J-Type  7'b1101111 n/a    n/a        Jump and Link
+JALR         I-Type  7'b1100111 3'b000 n/a        Jump and Link register
+LUI          U-Type  7'b0110111 n/a    n/a        Load upper immediate
+
+
+
