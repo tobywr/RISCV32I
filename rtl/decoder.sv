@@ -38,6 +38,7 @@ module decoder (
     wb_sel    = 2'b0;
     branch    = 1'b0;
     jump      = 1'b0;
+    jalr      = 1'b0;
     alu_op    = ALU_ADD;  //safe default, stops latch
 
     case (opcode)
@@ -94,6 +95,7 @@ module decoder (
         jalr = 1'b1;
         alu_src = 1'b1;
         alu_op = ALU_ADD;
+        wb_sel = 2'b10;
       end
 
       default: alu_op = ALU_ADD;  //Default
