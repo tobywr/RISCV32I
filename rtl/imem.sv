@@ -9,24 +9,22 @@
 
 import riscv_pkg::*;
 
-`timescale 1ns/1ps
+`timescale 1ns / 1ps
 
 module imem (
-    input logic [31:0] addr,    //Word alligned values (Divisable by 4)
-    output logic [31:0] instr   //instruction at that address
+    input  logic [31:0] addr,  //Word alligned values (Divisable by 4)
+    output logic [31:0] instr  //instruction at that address
 );
 
-    // 1KB instruction memory (256 instructions)
-    logic [31:0] mem [0:255];
+  // 1KB instruction memory (256 instructions)
+  logic [31:0] mem[0:255];
 
-    //initialize memory with program from hex file
+  //initialize memory with program from hex file
 
-    initial begin
-        $display("Loading instruction memory");
-        $readmemh("/home/toby/Desktop/PROJECTS/RISCV_CPU_CORE/sim/Full test/program.hex", mem); //Load mem from hex file
-        $display("First Instruction : %h", mem[0]);
-    end
+  initial begin
+    $readmemh("/home/RISCV32I/rtl/program.hex", mem);  //CHANGE TO YOUR PATH !!!!!!!
+  end
 
-    assign instr = mem[addr[9:2]]; // 1024/4 = 256 words. Need 8 bits to address 256 words.
-    
+  assign instr = mem[addr[9:2]];  // 1024/4 = 256 words. Need 8 bits to address 256 words.
+
 endmodule
