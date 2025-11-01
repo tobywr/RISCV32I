@@ -12,6 +12,10 @@ import riscv_pkg::*;
 module riscv_top_core (
     input logic clk,
     input logic rst_n,
+    output logic [31:0] gpio_addr,
+    output logic gpio_write,
+    output logic [31:0] gpio_wdata,
+    input logic [31:0] gpio_rdata_async,
     output logic [31:0] pc_debug,
     output logic [31:0] alu_result_debug,
     output logic [31:0] instr_debug
@@ -36,6 +40,22 @@ module riscv_top_core (
   logic    jalr;
   logic    zero;
   alu_op_t alu_op;
+
+  //GPIO integration
+  assign gpio_addr  = alu_result;
+  assign gpio_write = mem_write;
+  assign gpio_wdata = read_data2;
+
+
+  logic [31:0] gpio_rdata;
+
+  always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+      gpio_rdata <= 32'b0;
+    end else begin
+      gpio_rdata <= gpio_rdata_async;
+    end
+  end
 
   //instantiate every module with correct logic
 
@@ -85,7 +105,8 @@ module riscv_top_core (
       .we_i(mem_write),
       .addr_i(alu_result),
       .wd_i(read_data2),
-      .rd_o(mem_read_data)
+      .rd_o(mem_read_data),
+      .gpio_rdata(gpio_rdata)
   );
 
   operand_a_selector operand_a_sel (
@@ -110,11 +131,11 @@ module riscv_top_core (
 
   //result selector mux
   always_comb begin
-    case(wb_sel)
-        2'b00: write_data   = alu_result;
-        2'b01: write_data   = mem_read_data;
-        2'b10: write_data   = pc_plus_4;
-        default: write_data = alu_result; //safe default
+    case (wb_sel)
+      2'b00:   write_data = alu_result;
+      2'b01:   write_data = mem_read_data;
+      2'b10:   write_data = pc_plus_4;
+      default: write_data = alu_result;  //safe default
     endcase
   end
 
