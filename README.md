@@ -61,6 +61,9 @@ the `riscv_fpga_top.sv` module handles all FPGA specific logic.
 
 - LEDs at pins specified in `PIN.xdc` file should light up, and stay lit forever.
 
+__Structure of `program.hex`__:
+
+
 | Hex instruction | Function                                                                                                              |
 | --------------- | --------------------------------------------------------------------------------------------------------------------- |
 | 00300293        | ADDI operation, adds 3 to the register address x5                                                                     |
