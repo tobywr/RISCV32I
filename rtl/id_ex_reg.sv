@@ -60,7 +60,7 @@ module id_ex_reg (
             branch_id_ex <= '0;
             jump_id_ex <= '0;
             jalr_id_ex <= '0;
-            alu_op_id_ex <= '0;
+            alu_op_id_ex <= ALU_ADD;
         end else if (hold) begin
             pc_id_ex <= pc_id_ex;
             pc_plus_4_id_ex <= pc_plus_4_id_ex;
@@ -96,7 +96,7 @@ module id_ex_reg (
             branch_id_ex <= '0;
             jump_id_ex <= '0;
             jalr_id_ex <= '0;
-            alu_op_id_ex <= '0;
+            alu_op_id_ex <= ALU_ADD;
         end else begin
             pc_id_ex <= pc;
             pc_plus_4_id_ex <= pc_plus_4;
