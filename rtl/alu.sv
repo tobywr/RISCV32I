@@ -10,10 +10,10 @@
 import riscv_pkg::*;
 
 module alu (
-    input logic [31:0] operand_a,
-    input logic [31:0] operand_b,
+    input logic [DATA_WIDTH-1:0] operand_a,
+    input logic [DATA_WIDTH-1:0] operand_b,
     input alu_op_t alu_op,
-    output logic [31:0] alu_result,
+    output logic [DATA_WIDTH-1:0] alu_result,
     output logic zero
 );
   always_comb begin

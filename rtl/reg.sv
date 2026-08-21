@@ -36,13 +36,17 @@ module register (
 
   // forcing address 0 to read as zero in all registers.
   always_comb begin
-    if (addr_read1 == 0) begin
+    if (write_enable && (addr_write == addr_read1) && addr_read1 != 0) begin
+      read_data1 = write_data;
+    end else if (addr_read1 == 0) begin
       read_data1 = '0;
     end else begin
       read_data1 = register[addr_read1];
     end
 
-    if (addr_read2 == 0) begin
+    if (write_enable && (addr_write == addr_read2) && addr_read2 != 0) begin
+      read_data2 = write_data;
+    end else if (addr_read2 == 0) begin
       read_data2 = '0;
     end else begin
       read_data2 = register[addr_read2];

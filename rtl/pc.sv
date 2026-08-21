@@ -3,42 +3,40 @@
 | Program Counter for RISC-V Single Core|
 |        Designed by Toby Wright        |
 |            github.com/tobywr          |
-|                V1.0.0                 |
+|                V1.0.1                 |
 -----------------------------------------
 */
+
+import riscv_pkg::*;
 
 module program_counter (
     input logic clk,
     input logic rst_n,
-    input logic branch,
-    input logic jump,
-    input logic jalr,
-    input logic zero,
-    input logic [31:0] imm_extended,
-    input logic [31:0] read_data1,
-    output logic [31:0] pc
+    input logic stall,
+    input logic [ADDR_WIDTH-1:0] pc_plus_4,
+    input logic pc_src,
+    input logic [ADDR_WIDTH-1:0] branch_target,
+    output logic [ADDR_WIDTH-1:0] pc
 );
 
-  logic [31:0] pc_next;
+  logic [ADDR_WIDTH-1:0] pc_next;
+
 
   always_comb begin
-    if (jalr) begin
-      pc_next = (read_data1 + imm_extended) & 32'hFFFFFFFE;
-    end else if (jump) begin
-      pc_next = pc + imm_extended;
-    end else if (branch & zero) begin
-      pc_next = pc + imm_extended;
+    if(stall) begin
+      pc_next = pc;
+    end else if (pc_src) begin
+      pc_next = branch_target;
     end else begin
-      pc_next = pc + 32'd4;
+      pc_next = pc_plus_4;
     end
-
   end
 
   always_ff @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
       pc <= 32'h00000000;  //start at address 0 on reset.
     end else begin
-      pc <= pc_next;  //Update PC on clk edge.
+      pc <= pc_next;  //Update PC (registerd)
     end
   end
 endmodule
