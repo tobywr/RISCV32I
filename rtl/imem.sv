@@ -22,7 +22,7 @@ module imem (
   //initialize memory with program from hex file
 
   initial begin
-    $readmemh("C:/Users/toby/Desktop/CV_PROJECTS/RISCV32I/rtl/program.hex", mem);  //CHANGE TO YOUR PATH !!!!!!!
+    $readmemh("/home/toby/Desktop/CV/RISCV32I/rtl/program.hex", mem);  //CHANGE TO YOUR PATH !!!!!!!
   end
 
   assign instr = mem[addr[9:2]];  // 1024/4 = 256 words. Need 8 bits to address 256 words.

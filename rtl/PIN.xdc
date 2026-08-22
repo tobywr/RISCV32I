@@ -1,15 +1,12 @@
 set_property PACKAGE_PIN M19 [get_ports clk]
 set_property IOSTANDARD LVCMOS33 [get_ports clk]
-create_clock -period 13.200 [get_ports clk]
+
+set_property IOSTANDARD LVCMOS33 [get_ports tx_out]
 set_property IOSTANDARD LVCMOS33 [get_ports rst_n]
+
+set_property PACKAGE_PIN L17 [get_ports tx_out]
 set_property PACKAGE_PIN K21 [get_ports rst_n]
-set_property IOSTANDARD LVCMOS33 [get_ports led1]
-set_property PACKAGE_PIN P20 [get_ports led1]
-set_property IOSTANDARD LVCMOS33 [get_ports led2]
-set_property PACKAGE_PIN P21 [get_ports led2]
-set_output_delay -clock [get_clocks clk] 2.000 [get_ports led1]
-set_output_delay -clock [get_clocks clk] 2.000 [get_ports led2]
+
+create_clock -period 20.000 -name clk [get_ports clk]
 set_false_path -from [get_ports rst_n]
-set_property IOSTANDARD LVCMOS33 [get_ports btn1]
-set_property PACKAGE_PIN J20 [get_ports btn1]
-set_false_path -from [get_ports btn1]
+
